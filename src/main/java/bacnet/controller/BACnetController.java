@@ -4,17 +4,16 @@ import bacnet.utils.Device;
 import com.serotonin.bacnet4j.exception.BACnetServiceException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
-import com.serotonin.bacnet4j.obj.BACnetObject;
 import com.serotonin.bacnet4j.obj.BinaryValueObject;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
 import com.serotonin.bacnet4j.type.constructed.EventTransitionBits;
 import com.serotonin.bacnet4j.type.enumerated.BinaryPV;
 import com.serotonin.bacnet4j.type.enumerated.NotifyType;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BACnetController {
-    private static final Logger LOG = LoggerFactory.getLogger(BACnetController.class);
+    static final Logger LOG = LoggerFactory.getLogger(BACnetController.class);
     private final Device device;
     private final int deviceId = 1234568;
     private final int bacPort = 47808;
