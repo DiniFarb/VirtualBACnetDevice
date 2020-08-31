@@ -1,6 +1,7 @@
 package bacnet.controller;
 
 import bacnet.utils.Device;
+import bacnet.utils.VirtualBinaryValueObject;
 import com.serotonin.bacnet4j.exception.BACnetServiceException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
@@ -9,6 +10,7 @@ import com.serotonin.bacnet4j.transport.DefaultTransport;
 import com.serotonin.bacnet4j.type.constructed.EventTransitionBits;
 import com.serotonin.bacnet4j.type.enumerated.BinaryPV;
 import com.serotonin.bacnet4j.type.enumerated.NotifyType;
+import com.serotonin.bacnet4j.type.primitive.CharacterString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,7 @@ public class BACnetController {
     static final Logger LOG = LoggerFactory.getLogger(BACnetController.class);
     private final Device device;
     private final int deviceId = 1234568;
-    private final int bacPort = 47808;
+    private final int bacPort = 47809;
 
 
 
@@ -44,8 +46,8 @@ public class BACnetController {
     public void createBinaryValueObject(){
         try {
             LOG.debug("Create Binary Value Object");
-            BinaryValueObject binaryValue = new BinaryValueObject(device,1,
-                    "B1'E'BV01",BinaryPV.inactive,false);
+            VirtualBinaryValueObject binaryValue = new VirtualBinaryValueObject(device,1,
+                    "B1'E'BV01",BinaryPV.inactive,false,new CharacterString("Test Alarm 1"));
             binaryValue.supportStateText("Normal","Alarm");
             binaryValue.supportCovReporting();
             binaryValue.supportActiveTime();
