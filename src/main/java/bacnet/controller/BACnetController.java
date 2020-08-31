@@ -2,15 +2,18 @@ package bacnet.controller;
 
 import bacnet.utils.Device;
 import bacnet.utils.VirtualBinaryValueObject;
+import bacnet.utils.VirtualStructureViewObject;
+import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.exception.BACnetServiceException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
-import com.serotonin.bacnet4j.obj.BinaryValueObject;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
 import com.serotonin.bacnet4j.type.constructed.EventTransitionBits;
 import com.serotonin.bacnet4j.type.enumerated.BinaryPV;
 import com.serotonin.bacnet4j.type.enumerated.NotifyType;
+import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.primitive.CharacterString;
+import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +21,7 @@ public class BACnetController {
     static final Logger LOG = LoggerFactory.getLogger(BACnetController.class);
     private final Device device;
     private final int deviceId = 1234568;
-    private final int bacPort = 47809;
+    private final int bacPort = 47808;
 
 
 
@@ -35,7 +38,7 @@ public class BACnetController {
     }
 
     private DefaultTransport createNetwork() {
-        LOG.debug("Create Network on port: {}, device ID: {}", bacPort, deviceId);
+        LOG.debug("Create Network on port: {}", bacPort);
         IpNetworkBuilder ipNetworkBuilder = new IpNetworkBuilder();
         ipNetworkBuilder.withLocalBindAddress(IpNetwork.DEFAULT_BIND_IP);
         ipNetworkBuilder.withBroadcast("255.255.255.255", IpNetwork.BVLC_TYPE);
@@ -62,6 +65,16 @@ public class BACnetController {
         } catch (BACnetServiceException e) {
             e.printStackTrace();
         }
+    }
+
+    public void createStructureObjects(){
+        try {
+        LOG.debug("Create Structure View Objects");
+        new VirtualStructureViewObject(device, new ObjectIdentifier(ObjectType.structuredView,1),"B1", new CharacterString("Gebäude 1"));
+        new VirtualStructureViewObject(device, new ObjectIdentifier(ObjectType.structuredView,2),"B1'E", new CharacterString("Elektro"));
+    } catch (BACnetServiceException e) {
+        e.printStackTrace();
+    }
     }
 
 

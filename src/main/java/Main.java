@@ -6,5 +6,6 @@ public class Main {
         BACnetController bacnetController = new BACnetController();
         bacnetController.initializeDevice();
         bacnetController.createBinaryValueObject();
+        bacnetController.createStructureObjects();
     }
 }

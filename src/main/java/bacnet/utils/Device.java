@@ -7,6 +7,7 @@ public class Device extends LocalDevice {
 
     public Device(int deviceNumber, Transport transport) {
         super(deviceNumber,transport);
+
     }
 
 }
